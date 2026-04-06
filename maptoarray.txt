@@ -1,0 +1,1 @@
+let mapArray3 = Array.from(newmap.keys());
