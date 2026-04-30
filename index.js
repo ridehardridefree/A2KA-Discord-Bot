@@ -109,8 +109,6 @@ client.on('messageCreate', message => {
         var detected = divideInput(unit)
         var tempNumeric = detected.shift();
         var tempUnit = detected.shift();
-        console.log('TEMP UNIT')
-        console.log(tempUnit)
         var tempUnit = tempUnit.toString();
         var originalDetection = unit.toString();
         conversionMap.set(originalDetection.toUpperCase(), convertTemp(tempNumeric, tempUnit));
