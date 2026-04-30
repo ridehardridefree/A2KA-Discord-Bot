@@ -53,8 +53,8 @@ client.on('messageCreate', message => {
 //                |_|                                     
 // Convert F to C and C to F
 //--------------------------------------------------------------
-  const allUnitsRegex = /-\d{1,12}[c,C,f,F]|\d{1,12}[c,C,f,F]/g;
-  const numericRegex = /-\d{1,12}|\d{1,12}/g;
+  const allUnitsRegex = /-[0-9]{1,}[.][0-9]{1,}[c,C,f,F]|[0-9]{1,}[.][0-9]{1,}[c,C,f,F]|\d{1,}[c,C,f,F]|-\d{1,}[c,C,f,F]/g;
+  const numericRegex = /.*[0-9][.][0-9]{1,}|\d{1,}|-\d{1,}/g;
   const unitRegex = /[c,C,f,F]/g;
 
   // Function to convert the temperatures.
@@ -62,13 +62,13 @@ client.on('messageCreate', message => {
   function convertTemp(value, unit) {
     if (unit.toLowerCase() === 'f') {
       const rawConversion = (value - 32) / (9 / 5);
-      const roundedConversion = Math.round(rawConversion)
+      const roundedConversion = rawConversion.toFixed(2)
       var returnConversion = roundedConversion + 'C'
       return returnConversion
     }
     else if (unit.toLowerCase() === 'c') {
       const rawConversion = (value * (9 / 5)) + 32;
-      const roundedConversion = Math.round(rawConversion)
+      const roundedConversion = rawConversion.toFixed(2)
       var returnConversion = roundedConversion + 'F'
       return returnConversion
     }
@@ -109,6 +109,8 @@ client.on('messageCreate', message => {
         var detected = divideInput(unit)
         var tempNumeric = detected.shift();
         var tempUnit = detected.shift();
+        console.log('TEMP UNIT')
+        console.log(tempUnit)
         var tempUnit = tempUnit.toString();
         var originalDetection = unit.toString();
         conversionMap.set(originalDetection.toUpperCase(), convertTemp(tempNumeric, tempUnit));
