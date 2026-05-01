@@ -100,7 +100,7 @@ client.on('messageCreate', message => {
       }
       else if (tempUnit.toLowerCase() === 'c') {
         var output = convertTemp(tempNumeric, tempUnit);
-        message.reply(`Oh, it looks like your using those Civalized Units of Metric and have mentioned value of ${originalDetection.toUpperCase()}. For the Freedom Unit lovers that would be ${output.toUpperCase()}`);
+        message.reply(`Oh, it looks like your using those Civilized Units of Metric and have mentioned value of ${originalDetection.toUpperCase()}. For the Freedom Unit lovers that would be ${output.toUpperCase()}`);
       }
     }
     else if (allUnitsMatchCount >= 2) {
