@@ -139,20 +139,20 @@ client.on('messageCreate', message => {
 //               |___/            
 // Convert LB(S) to KG(S) and KG(S) to LB(S)
 //--------------------------------------------------------------
-  const allWeightRegex = /\d{1,}([l,L][b,B]|[k.K][g,G])[s,S]?/g;  
-  const weightNumericRegex = /\d{1,}/g;  
-  const weightUnitRegex = /([l,L][b,B]|[k.K][g,G])[s,S]?/g;
+  const allWeightRegex =  /\d{1,}([l,L][b,B]|[k,K][g,G])[s,S]?|\d{1,}\.\d{1,}([l,L][b,B]|[k,K][g,G])[s,S]?/g;
+  const weightNumericRegex = /\d{1,}[.]\d{1,}|\d{1,}/g;  
+  const weightUnitRegex = /([l,L][b,B]|[k,K][g,G])[s,S]?/g;
 
   function convertWeight(value,unit) {
     if (unit.toLowerCase() === ('lb') || unit.toLowerCase() === ('lbs')) {
       const rawConversion = value * 0.45359237;
-      const roundedConversion = Math.round(rawConversion)
+      const roundedConversion = rawConversion.toFixed(2)
       var returnConversion = roundedConversion + 'KG(S)'
       return returnConversion
     }
     else if (unit.toLowerCase() === ('kg') || unit.toLowerCase() === ('kgs')) {
       const rawConversion = value / 0.45359237;
-      const roundedConversion = Math.round(rawConversion)
+      const roundedConversion = rawConversion.toFixed(2)
       var returnConversion = roundedConversion + 'LB(S)'
       return returnConversion
     }
@@ -161,11 +161,15 @@ client.on('messageCreate', message => {
   function divideWeightInput(input) {
         var input = input.toString();
         var weightNumeric = input.match(weightNumericRegex);
+    console.log(weightNumeric)
         var weightUnit = input.match(weightUnitRegex);
+    console.log(weightUnit)
         return [weightNumeric, weightUnit];
       }
   
   const allWeightMatch = cleanedMessage.match(allWeightRegex);
+
+  console.log(allWeightMatch)
 
   if (allWeightMatch) {
       var allWeightCount = allWeightMatch.length;
