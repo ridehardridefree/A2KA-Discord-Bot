@@ -1,5 +1,5 @@
 // Import required module
-const { Client, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits, Base, User } = require('discord.js');
 require('dotenv').config();
 
 // Create a new Discord client with message intent 
@@ -7,7 +7,8 @@ const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent]
+    GatewayIntentBits.MessageContent,
+  ]
 });
 
 // Bot is ready 
@@ -15,11 +16,9 @@ client.once('clientready', () => {
   console.log(`🤖 Logged in as ${client.user.tag}`);
 });
 
-
-
 // Listen and respond to messages 
 client.on('messageCreate', message => {
-
+  
   // Ignore messages from bots 
   if (message.author.bot) return;
 
@@ -38,13 +37,13 @@ client.on('messageCreate', message => {
 
   // Detect, convert, and message the chat with the temperature conversion.
   const currentMessage = message.content;
-
+ // const postingUserName = message.user.displayName;
 
   const urlRegex = /https:\/\/\S*|http:\/\/\S*/g;
 
   cleanedMessage = currentMessage.replace(urlRegex,"URL")
-
-  console.log(`[CLEANED] ${cleanedMessage}`);
+  
+  console.log(`[CLEANED] [MESSAGE: ${cleanedMessage}]`);
 //--------------------------------------------------------------
 //  _____                             _                   
 // |_   _|__ _ __  _ __  ___ _ _ __ _| |_ _  _ _ _ ___ ___
@@ -161,15 +160,11 @@ client.on('messageCreate', message => {
   function divideWeightInput(input) {
         var input = input.toString();
         var weightNumeric = input.match(weightNumericRegex);
-    console.log(weightNumeric)
         var weightUnit = input.match(weightUnitRegex);
-    console.log(weightUnit)
         return [weightNumeric, weightUnit];
       }
   
   const allWeightMatch = cleanedMessage.match(allWeightRegex);
-
-  console.log(allWeightMatch)
 
   if (allWeightMatch) {
       var allWeightCount = allWeightMatch.length;
